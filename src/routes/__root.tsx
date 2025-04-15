@@ -14,40 +14,164 @@ export const Route = createRootRouteWithContext<{
   component: RootComponent,
   notFoundComponent: () => {
     return (
-      <div>
-        <p>This is the notFoundComponent configured on root route</p>
-        <Link to="/">Start Over</Link>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4">
+        <div className="text-6xl mb-6">🍳</div>
+        <h1 className="text-3xl font-bold text-gray-800 mb-4">
+          Page Not Found
+        </h1>
+        <p className="text-gray-600 mb-8">
+          Sorry, we couldn't find the page you're looking for.
+        </p>
+        <Link
+          to="/"
+          className="bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 px-6 rounded-lg transition-colors"
+        >
+          Return Home
+        </Link>
       </div>
     );
   },
 });
 
 function RootComponent() {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
   return (
-    <>
-      <div className="p-2 flex gap-2 text-lg">
-        <Link
-          to="/"
-          activeProps={{
-            className: "font-bold",
-          }}
-          activeOptions={{ exact: true }}
-        >
-          Home
-        </Link>{" "}
-        <Link
-          to="/recipes"
-          activeProps={{
-            className: "font-bold",
-          }}
-        >
-          Opskrifter
-        </Link>
-      </div>
-      <hr />
-      <Outlet />
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      <header className="bg-white shadow-sm">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex justify-between items-center py-4 px-4">
+            {/* Logo */}
+            <Link to="/" className="flex items-center space-x-2">
+              <span className="text-2xl">🍽️</span>
+              <span className="text-xl font-bold text-amber-800">
+                RestaurantGosse
+              </span>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex space-x-8">
+              <NavLink to="/" label="Forside" />
+              <NavLink to="/recipes" label="Opskrifter" />
+            </nav>
+
+            {/* Mobile menu button */}
+            <button
+              className="md:hidden text-gray-700"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d={
+                    isMenuOpen
+                      ? "M6 18L18 6M6 6l12 12"
+                      : "M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5"
+                  }
+                />
+              </svg>
+            </button>
+          </div>
+
+          {/* Mobile Navigation */}
+          {isMenuOpen && (
+            <div className="md:hidden py-3 px-4 border-t border-gray-100">
+              <nav className="flex flex-col space-y-3">
+                <MobileNavLink
+                  to="/"
+                  label="Forside"
+                  onClick={() => setIsMenuOpen(false)}
+                />
+                <MobileNavLink
+                  to="/recipes"
+                  label="Opskrifter"
+                  onClick={() => setIsMenuOpen(false)}
+                />
+              </nav>
+            </div>
+          )}
+        </div>
+      </header>
+
+      <main className="flex-grow">
+        <Outlet />
+      </main>
+
+      <footer className="bg-gray-800 text-gray-200 py-8">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="mb-4 md:mb-0">
+              <div className="flex items-center space-x-2">
+                <span className="text-2xl">🍽️</span>
+                <span className="text-xl font-bold text-amber-400">
+                  RestaurantGosse
+                </span>
+              </div>
+              <p className="text-sm text-gray-400 mt-2">
+                Familien Gosvig's samling af opskrifter
+              </p>
+            </div>
+            <div className="text-center md:text-right">
+              <p className="text-sm text-gray-400">
+                © {new Date().getFullYear()} RestaurantGosse
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer>
+
       <ReactQueryDevtools buttonPosition="top-right" />
       <TanStackRouterDevtools position="bottom-right" />
-    </>
+    </div>
+  );
+}
+
+type NavLinkProps = {
+  to: string;
+  label: string;
+};
+
+function NavLink({ to, label }: NavLinkProps) {
+  return (
+    <Link
+      to={to}
+      activeProps={{
+        className: "font-medium text-amber-600",
+      }}
+      activeOptions={{ exact: to === "/" }}
+      className="text-gray-700 hover:text-amber-600 transition-colors"
+    >
+      {label}
+    </Link>
+  );
+}
+
+type MobileNavLinkProps = {
+  to: string;
+  label: string;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement> | undefined;
+};
+
+function MobileNavLink({ to, label, onClick }: MobileNavLinkProps) {
+  return (
+    <Link
+      to={to}
+      onClick={onClick}
+      activeProps={{
+        className: "font-medium text-amber-600",
+      }}
+      activeOptions={{ exact: to === "/" }}
+      className="text-gray-700 hover:text-amber-600 transition-colors block py-2"
+    >
+      {label}
+    </Link>
   );
 }

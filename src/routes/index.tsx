@@ -21,19 +21,19 @@ function Home() {
         <div className="flex flex-col md:flex-row items-center">
           <div className="md:w-1/2 mb-6 md:mb-0 md:pr-8">
             <h2 className="text-3xl font-semibold text-amber-800 mb-4">
-              Discover Our Collection
+              Opdag vores lækre opskrifter
             </h2>
             <p className="text-gray-700 mb-6">
-              Browse through our carefully curated recipes, from quick weekday
-              dinners to impressive dishes for special occasions. Each recipe
-              includes detailed instructions, ingredient lists, and cooking
-              times.
+              Led vores nøje udvalgte opskrifter igennem. Der er alt fra lette
+              hverdagsretter til blærerøvsretterne for de særlige øjeblikke.
+              Hver opskrift kommer med udførlige instruktioner samt
+              ingrediensliste.
             </p>
             <Link
               to="/recipes"
               className="inline-block bg-amber-600 hover:bg-amber-700 text-white font-medium py-3 px-6 rounded-lg transition-colors"
             >
-              Explore Recipes
+              Udforsk opskrifterne
             </Link>
           </div>
           <div className="md:w-1/2 flex justify-center">
@@ -47,26 +47,19 @@ function Home() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
         <FeatureCard
           icon="⏱️"
-          title="Quick & Easy"
-          description="Find recipes that fit your schedule, with preparation times clearly marked."
+          title="Hurtigt & Let"
+          description="Find opskrifter der passer ind i dit skema. Alle opskrifter er markeret med forberedelsestid."
         />
         <FeatureCard
           icon="🌱"
-          title="Vegetarian Options"
-          description="Discover our selection of delicious vegetarian recipes for every taste."
+          title="Vegetariske muligheder"
+          description="Udforsk vores udvalg af lærke vegetariske retter."
         />
         <FeatureCard
           icon="🍳"
-          title="Detailed Instructions"
-          description="Follow our step-by-step guides to create perfect dishes every time."
+          title="Detaljerede instruktioner"
+          description="Følg vores instruktioner, og sikre dig det perfekte resultat hver gang."
         />
-      </div>
-
-      <div className="text-center">
-        <p className="text-gray-600">
-          Start exploring our collection today and bring restaurant-quality
-          dishes to your home.
-        </p>
       </div>
     </div>
   );
