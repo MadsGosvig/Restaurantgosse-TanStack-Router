@@ -1,6 +1,6 @@
-# Example
+# TODO:
 
-To run this example:
-
-- `npm install` or `yarn`
-- `npm start` or `yarn start`
+1. Add correct logo
+2. Enhance Menu / Navigation
+3. Make it look pretty?
+4. Implement searching

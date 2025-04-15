@@ -1,5 +1,5 @@
 import * as React from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -7,8 +7,83 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   return (
-    <div className="p-2">
-      <h3>Welcome Home!</h3>
+    <div className="max-w-6xl mx-auto px-4 py-8">
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold text-gray-800 mb-4">
+          Velkommen til RestaurantGosse
+        </h1>
+        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          Familien Gosvig's samling af opskrifter!
+        </p>
+      </div>
+
+      <div className="bg-gradient-to-r from-amber-100 to-amber-50 rounded-xl shadow-lg p-8 mb-12">
+        <div className="flex flex-col md:flex-row items-center">
+          <div className="md:w-1/2 mb-6 md:mb-0 md:pr-8">
+            <h2 className="text-3xl font-semibold text-amber-800 mb-4">
+              Discover Our Collection
+            </h2>
+            <p className="text-gray-700 mb-6">
+              Browse through our carefully curated recipes, from quick weekday
+              dinners to impressive dishes for special occasions. Each recipe
+              includes detailed instructions, ingredient lists, and cooking
+              times.
+            </p>
+            <Link
+              to="/recipes"
+              className="inline-block bg-amber-600 hover:bg-amber-700 text-white font-medium py-3 px-6 rounded-lg transition-colors"
+            >
+              Explore Recipes
+            </Link>
+          </div>
+          <div className="md:w-1/2 flex justify-center">
+            <div className="w-64 h-64 bg-amber-200 rounded-full flex items-center justify-center">
+              <span className="text-amber-800 text-6xl">🍽️</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+        <FeatureCard
+          icon="⏱️"
+          title="Quick & Easy"
+          description="Find recipes that fit your schedule, with preparation times clearly marked."
+        />
+        <FeatureCard
+          icon="🌱"
+          title="Vegetarian Options"
+          description="Discover our selection of delicious vegetarian recipes for every taste."
+        />
+        <FeatureCard
+          icon="🍳"
+          title="Detailed Instructions"
+          description="Follow our step-by-step guides to create perfect dishes every time."
+        />
+      </div>
+
+      <div className="text-center">
+        <p className="text-gray-600">
+          Start exploring our collection today and bring restaurant-quality
+          dishes to your home.
+        </p>
+      </div>
+    </div>
+  );
+}
+
+type FeatureCardProps = {
+  icon: string;
+  title: string;
+  description: string;
+};
+
+function FeatureCard({ icon, title, description }: FeatureCardProps) {
+  return (
+    <div className="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+      <div className="text-4xl mb-4">{icon}</div>
+      <h3 className="text-xl font-semibold text-gray-800 mb-2">{title}</h3>
+      <p className="text-gray-600">{description}</p>
     </div>
   );
 }
