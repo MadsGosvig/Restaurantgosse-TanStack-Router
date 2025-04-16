@@ -74,7 +74,7 @@ function RecipeComponent() {
   const recipeId = Route.useParams().recipeId;
   const { data: recipe } = useSuspenseQuery(recipeQueryOptions(recipeId));
 
-  // Custom rendering options for rich text
+  // Custom rendering options for rich text - with proper TypeScript types
   const richTextOptions: Options = {
     renderMark: {
       [MARKS.BOLD]: (text) => <span className="font-bold">{text}</span>,
@@ -82,25 +82,25 @@ function RecipeComponent() {
       [MARKS.UNDERLINE]: (text) => <span className="underline">{text}</span>,
     },
     renderNode: {
-      [BLOCKS.PARAGRAPH]: (_node, children) => (
+      [BLOCKS.PARAGRAPH]: (node, children) => (
         <p className="mb-4">{children}</p>
       ),
-      [BLOCKS.HEADING_1]: (_node, children) => (
-        <h1 className="text-3xl font-bold mb-4">{children}</h1>
+      [BLOCKS.HEADING_1]: (node, children) => (
+        <h1 className="text-3xl font-bold mb-4 text-center">{children}</h1>
       ),
-      [BLOCKS.HEADING_2]: (_node, children) => (
-        <h2 className="text-2xl font-bold mb-3">{children}</h2>
+      [BLOCKS.HEADING_2]: (node, children) => (
+        <h2 className="text-2xl font-bold mb-3 text-center">{children}</h2>
       ),
-      [BLOCKS.HEADING_3]: (_node, children) => (
-        <h3 className="text-xl font-bold mb-2">{children}</h3>
+      [BLOCKS.HEADING_3]: (node, children) => (
+        <h3 className="text-xl font-bold mb-2 text-center">{children}</h3>
       ),
-      [BLOCKS.UL_LIST]: (_node, children) => (
+      [BLOCKS.UL_LIST]: (node, children) => (
         <ul className="list-disc pl-6 mb-4">{children}</ul>
       ),
-      [BLOCKS.OL_LIST]: (_node, children) => (
+      [BLOCKS.OL_LIST]: (node, children) => (
         <ol className="list-decimal pl-6 mb-4">{children}</ol>
       ),
-      [BLOCKS.LIST_ITEM]: (_node, children) => (
+      [BLOCKS.LIST_ITEM]: (node, children) => (
         <li className="mb-1">{children}</li>
       ),
       [INLINES.HYPERLINK]: (node, children) => (
@@ -130,7 +130,7 @@ function RecipeComponent() {
       )}
 
       <div className="p-6">
-        <div className="mb-6">
+        <div className="mb-6 text-center">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">
             {recipe.fields.title}
           </h1>
@@ -142,42 +142,50 @@ function RecipeComponent() {
           <InfoCard icon="🍽️" title="Serves" value={recipe.fields.amount} />
           <InfoCard
             icon={recipe.fields.isVegetarian ? "🌱" : "🥩"}
-            title="Type"
+            title="Diet"
             value={
               recipe.fields.isVegetarian ? "Vegetarian" : recipe.fields.type
             }
           />
         </div>
 
-        {recipe.fields.ingredients && (
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold mb-3 text-amber-800 border-b border-amber-200 pb-2">
-              Ingredienser
-            </h2>
-            <div className="rich-text-content text-gray-700">
-              {documentToReactComponents(
-                recipe.fields.ingredients,
-                richTextOptions
-              )}
+        <div className="flex flex-col md:flex-row gap-6 mb-6">
+          {/* Ingredients in a colored box */}
+          {recipe.fields.ingredients && (
+            <div className="md:w-1/3">
+              <div className="bg-amber-50 rounded-lg p-5 border-l-4 border-amber-500 shadow-sm">
+                <h2 className="text-xl font-semibold mb-4 text-center text-amber-800 border-b border-amber-200 pb-2">
+                  Ingredienser
+                </h2>
+                <div className="rich-text-content text-gray-700">
+                  {documentToReactComponents(
+                    recipe.fields.ingredients,
+                    richTextOptions
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {recipe.fields.instructions && (
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold mb-3 text-amber-800 border-b border-amber-200 pb-2">
-              Instruktioner
-            </h2>
-            <div className="rich-text-content text-gray-700">
-              {documentToReactComponents(
-                recipe.fields.instructions,
-                richTextOptions
-              )}
+          {/* Instructions */}
+          {recipe.fields.instructions && (
+            <div className="md:w-2/3">
+              <div className="bg-white rounded-lg p-5">
+                <h2 className="text-xl font-semibold mb-4 text-center text-amber-800 border-b border-amber-200 pb-2">
+                  Instruktioner
+                </h2>
+                <div className="rich-text-content text-gray-700 max-w-2xl mx-auto">
+                  {documentToReactComponents(
+                    recipe.fields.instructions,
+                    richTextOptions
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
-        <div className="mt-8 pt-4 border-t border-gray-200 flex justify-between">
+        <div className="mt-8 pt-4 border-t border-gray-200 flex justify-center">
           <Link
             to="/recipes"
             className="text-amber-600 hover:text-amber-700 font-medium"
@@ -190,11 +198,11 @@ function RecipeComponent() {
   );
 }
 
-type InfoCardProps = {
+interface InfoCardProps {
   icon: string;
   title: string;
   value: string;
-};
+}
 
 function InfoCard({ icon, title, value }: InfoCardProps) {
   return (

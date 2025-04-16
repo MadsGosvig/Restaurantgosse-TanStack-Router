@@ -17,16 +17,16 @@ export const Route = createRootRouteWithContext<{
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-4">
         <div className="text-6xl mb-6">🍳</div>
         <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Page Not Found
+          Side ikke fundet
         </h1>
         <p className="text-gray-600 mb-8">
-          Sorry, we couldn't find the page you're looking for.
+          Vi kunne desværre ikke finde den side du ledte efter.
         </p>
         <Link
           to="/"
           className="bg-amber-600 hover:bg-amber-700 text-white font-medium py-2 px-6 rounded-lg transition-colors"
         >
-          Return Home
+          Vend tilbage i sikkerhed
         </Link>
       </div>
     );
@@ -43,14 +43,14 @@ function RootComponent() {
           <div className="flex justify-between items-center py-4 px-4">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
-              <span className="text-2xl">🍽️</span>
-              <span className="text-xl font-bold text-amber-800">
-                RestaurantGosse
+              <img className="w-[5em]" src="/favicon.svg" />
+              <span className="text-xl font-bold text-yellow-500 pt-3.5">
+                Restaurant Gosse
               </span>
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex space-x-8">
+            <nav className="hidden md:flex space-x-8 pt-3.5">
               <NavLink to="/" label="Forside" />
               <NavLink to="/recipes" label="Opskrifter" />
             </nav>
@@ -110,18 +110,17 @@ function RootComponent() {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
               <div className="flex items-center space-x-2">
-                <span className="text-2xl">🍽️</span>
-                <span className="text-xl font-bold text-amber-400">
-                  RestaurantGosse
+                <span className="text-xl font-bold text-yellow-500">
+                  Restaurant Gosse
                 </span>
               </div>
-              <p className="text-sm text-gray-400 mt-2">
+              <p className="text-sm text-white mt-2">
                 Familien Gosvig's samling af opskrifter
               </p>
             </div>
             <div className="text-center md:text-right">
-              <p className="text-sm text-gray-400">
-                © {new Date().getFullYear()} RestaurantGosse
+              <p className="text-sm text-white">
+                © {new Date().getFullYear()} Restaurant Gosse
               </p>
             </div>
           </div>

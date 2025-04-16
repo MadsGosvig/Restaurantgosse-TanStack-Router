@@ -1,4 +1,4 @@
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { recipesQueryOptions } from "../recipesQueryOptions";
 import { RecipeType } from "../recipes";
@@ -17,6 +17,7 @@ function RecipesLayoutComponent() {
   const recipeQuery = useSuspenseQuery(recipesQueryOptions);
   const recipes = recipeQuery.data;
   const [selectedType, setSelectedType] = useState(allCategoryName);
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   // Extract unique recipe types for filtering
   const recipeTypes = [
@@ -25,10 +26,21 @@ function RecipesLayoutComponent() {
   ];
 
   // Filter recipes based on selected type
-  const filteredRecipes =
-    selectedType === allCategoryName
-      ? recipes
-      : recipes.filter((recipe) => recipe.fields.type === selectedType);
+  const filteredRecipes = recipes
+    .filter(
+      (recipe) =>
+        selectedType === allCategoryName || recipe.fields.type === selectedType
+    )
+    .filter(
+      (recipe) =>
+        searchQuery === "" ||
+        recipe.fields.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+  const resetFilters = () => {
+    setSearchQuery("");
+    setSelectedType(allCategoryName);
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
@@ -40,6 +52,30 @@ function RecipesLayoutComponent() {
         <p className="text-gray-600">
           Se om du kan finde din yndlings opskrift...
         </p>
+      </div>
+
+      {/* Search bar */}
+      <div className="mb-6">
+        <div className="relative max-w-md">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <SearchIcon className="h-5 w-5 text-gray-400" />
+          </div>
+          <input
+            type="text"
+            placeholder="Søg efter en opskrift..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+          />
+          {searchQuery && (
+            <button
+              onClick={() => setSearchQuery("")}
+              className="absolute inset-y-0 right-0 pr-3 flex items-center"
+            >
+              <XIcon className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Category filters */}
@@ -64,12 +100,47 @@ function RecipesLayoutComponent() {
         </div>
       </div>
 
-      {/* Recipe cards grid */}
+      {/* Search results count */}
+      <div className="mb-4 text-sm text-gray-600">
+        {filteredRecipes.length === 0 ? (
+          <p>No recipes found. Try adjusting your search or filters.</p>
+        ) : searchQuery || selectedType !== "all" ? (
+          <p>
+            Found {filteredRecipes.length}{" "}
+            {filteredRecipes.length === 1 ? "recipe" : "recipes"}
+          </p>
+        ) : null}
+      </div>
+
       <div className="flex flex-col md:flex-row gap-6">
+        {/* Recipe cards grid */}
         <div className="md:w-2/3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:w-full">
-          {filteredRecipes.map((recipe) => (
-            <RecipeCard key={recipe.sys.id} recipe={recipe} />
-          ))}
+          {filteredRecipes.length > 0 ? (
+            filteredRecipes.map((recipe) => (
+              <RecipeCard key={recipe.sys.id} recipe={recipe} />
+            ))
+          ) : (
+            <div className="col-span-full py-12 text-center">
+              <div className="text-4xl mb-4">🔍</div>
+              <h3 className="text-xl font-medium text-gray-800 mb-2">
+                Ingen opskrifter fundet
+              </h3>
+              <p className="text-gray-600 mb-4">
+                Juster enten typen af opskrift, eller søg på en anden opskrift
+              </p>
+              <button
+                onClick={resetFilters}
+                className="px-4 py-2 bg-amber-600 text-white rounded-md hover:bg-amber-700"
+              >
+                Nustil søgning
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Recipe detail view */}
+        <div className="md:w-1/3">
+          <Outlet />
         </div>
       </div>
     </div>
@@ -127,5 +198,52 @@ function RecipeCard({ recipe }: RecipeCardProps) {
         </div>
       </div>
     </Link>
+  );
+}
+
+type SearchIconProps = {
+  className: string | undefined;
+};
+
+// Simple icon components
+function SearchIcon({ className }: SearchIconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+      />
+    </svg>
+  );
+}
+
+type XIconProps = {
+  className: string | undefined;
+};
+
+function XIcon({ className }: XIconProps) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M6 18L18 6M6 6l12 12"
+      />
+    </svg>
   );
 }

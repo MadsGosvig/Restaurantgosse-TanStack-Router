@@ -10,7 +10,7 @@ function Home() {
     <div className="max-w-6xl mx-auto px-4 py-8">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-800 mb-4">
-          Velkommen til RestaurantGosse
+          Velkommen til Restaurant Gosse
         </h1>
         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
           Familien Gosvig's samling af opskrifter!
