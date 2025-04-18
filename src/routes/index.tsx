@@ -1,9 +1,9 @@
-import { Link, Outlet, createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { createFileRoute } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { recipesQueryOptions } from "../recipesQueryOptions";
-import { RecipeType } from "../recipes";
-import { Entry } from "contentful";
-import { useState } from "react";
+import { RecipeCard } from "../components/recipe";
+import { SearchIcon, CrossIcon } from "../components/icons";
 
 export const Route = createFileRoute("/")({
   loader: ({ context: { queryClient } }) =>
@@ -49,7 +49,7 @@ function RecipesLayoutComponent() {
         <h1 className="text-3xl font-bold text-[#daa520] mb-2">
           Vores opskriftsamling
         </h1>
-        <p className="text-gray-600">
+        <p className="text-gray-700">
           Se om du kan finde din yndlings opskrift...
         </p>
       </div>
@@ -72,7 +72,7 @@ function RecipesLayoutComponent() {
               onClick={() => setSearchQuery("")}
               className="absolute inset-y-0 right-0 pr-3 flex items-center"
             >
-              <XIcon className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+              <CrossIcon className="h-5 w-5 text-gray-400 hover:text-gray-600" />
             </button>
           )}
         </div>
@@ -126,7 +126,7 @@ function RecipesLayoutComponent() {
             <h3 className="text-xl font-medium text-gray-800 mb-2">
               Ingen opskrifter fundet
             </h3>
-            <p className="text-gray-600 mb-4">
+            <p className="text-gray-800 mb-4">
               Juster enten typen af opskrift, eller søg på en anden opskrift
             </p>
             <button
@@ -139,106 +139,5 @@ function RecipesLayoutComponent() {
         )}
       </div>
     </div>
-  );
-}
-
-type RecipeCardProps = {
-  recipe: Entry<RecipeType, undefined, string>;
-};
-
-function RecipeCard({ recipe }: RecipeCardProps) {
-  const isVegetarian = recipe.fields.isVegetarian;
-
-  return (
-    <Link
-      to="/recipe/$recipeId"
-      params={{
-        recipeId: recipe.sys.id,
-      }}
-      className="block bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
-      activeProps={{
-        className:
-          "block bg-white rounded-lg shadow-md overflow-hidden ring-2 ring-[#daa520]",
-      }}
-    >
-      <div className="h-56 bg-gray-100 flex items-center justify-center">
-        {recipe.fields.image ? (
-          <img
-            // @ts-ignore - Fields does exist....
-            src={`https:${recipe.fields.image.fields.file.url}`}
-            alt={recipe.fields.title}
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <span className="text-4xl">🍽️</span>
-        )}
-      </div>
-      <div className="p-4">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="font-semibold text-gray-800 text-lg line-clamp-2">
-            {recipe.fields.title}
-          </h3>
-          {isVegetarian && (
-            <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full">
-              Veg
-            </span>
-          )}
-        </div>
-        <p className="text-gray-600 text-sm mb-3 line-clamp-2">
-          {recipe.fields.subtitle}
-        </p>
-        <div className="flex justify-between text-xs text-gray-500">
-          <span>{recipe.fields.type}</span>
-          <span>{recipe.fields.time}</span>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-type SearchIconProps = {
-  className: string | undefined;
-};
-
-// Simple icon components
-function SearchIcon({ className }: SearchIconProps) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-      />
-    </svg>
-  );
-}
-
-type XIconProps = {
-  className: string | undefined;
-};
-
-function XIcon({ className }: XIconProps) {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-      fill="none"
-      viewBox="0 0 24 24"
-      stroke="currentColor"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d="M6 18L18 6M6 6l12 12"
-      />
-    </svg>
   );
 }

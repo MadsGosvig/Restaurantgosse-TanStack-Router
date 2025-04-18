@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Music&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap&family=Noto+Music&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,7 +6,17 @@
 
                   
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Plus Jakarta Sans', serif;
+}
+
+.logo-text {
+  font-family: 'Plus Jakarta Sans', serif;
+  font-weight: bold;
+  font-size: 1.5rem;
 }
 
 /* Golden color override for key elements */
@@ -27,12 +37,6 @@ body {
   color: #daa520;
   font-size: 1.5rem;
   line-height: 1;
-}
-
-.logo-text {
-  font-family: serif;
-  font-weight: bold;
-  font-size: 1.5rem;
 }
 
 /* Custom styling for rich text content from Contentful */
