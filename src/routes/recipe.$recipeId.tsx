@@ -55,12 +55,10 @@ function RecipeComponent() {
         </div>
 
         <div className="mb-10">
-          {/* Ingredients section */}
           {recipe.fields.ingredients && (
             <RecipeIngredients ingredients={recipe.fields.ingredients} />
           )}
 
-          {/* Instructions section */}
           {recipe.fields.instructions && (
             <RecipeInstructions instructions={recipe.fields.instructions} />
           )}

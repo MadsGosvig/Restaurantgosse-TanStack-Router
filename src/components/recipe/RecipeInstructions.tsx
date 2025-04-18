@@ -1,5 +1,5 @@
 import React from "react";
-import { Document } from "@contentful/rich-text-types";
+import { BLOCKS, Document } from "@contentful/rich-text-types";
 
 export interface RecipeInstructionsProps {
   instructions: Document;
@@ -8,14 +8,13 @@ export interface RecipeInstructionsProps {
 export const RecipeInstructions: React.FC<RecipeInstructionsProps> = ({
   instructions,
 }) => {
-  // Extract paragraphs from the rich text
   const paragraphs: React.ReactNode[] = [];
 
-  // Process rich text content to find paragraphs
   if (instructions.content) {
     instructions.content.forEach((node, index) => {
-      if (node.nodeType === "paragraph" && node.content) {
+      if (node.nodeType === BLOCKS.PARAGRAPH && node.content) {
         const paragraphText = node.content
+          // @ts-ignore - Seems to work...
           .map((content) => content.value || "")
           .join("");
 
