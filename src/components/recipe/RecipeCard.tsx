@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "@tanstack/react-router";
 import { Entry } from "contentful";
-import { RecipeType } from "../../recipes";
+import { RecipeType } from "../../api/recipe/recipes";
 
 export interface RecipeCardProps {
   recipe: Entry<RecipeType, undefined, string>;
@@ -45,10 +45,10 @@ export const RecipeCard: React.FC<RecipeCardProps> = ({ recipe }) => {
             </span>
           )}
         </div>
-        <p className="text-gray-700 text-sm mb-3 line-clamp-2">
+        <p className="text-gray-600 text-sm mb-3 line-clamp-2">
           {recipe.fields.subtitle}
         </p>
-        <div className="flex justify-between text-xs text-gray-700  ">
+        <div className="flex justify-between text-xs text-gray-500">
           <span>{recipe.fields.type}</span>
           <span>{recipe.fields.time}</span>
         </div>

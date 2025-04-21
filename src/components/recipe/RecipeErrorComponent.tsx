@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { ErrorComponent, Link, useRouter } from "@tanstack/react-router";
 import { useQueryErrorResetBoundary } from "@tanstack/react-query";
 import type { ErrorComponentProps } from "@tanstack/react-router";
-import { RecipeNotFoundError } from "../../recipes";
+import { RecipeNotFoundError } from "../../api/recipe/recipes";
 
 export const RecipeErrorComponent: React.FC<ErrorComponentProps> = ({
   error,
@@ -22,7 +22,7 @@ export const RecipeErrorComponent: React.FC<ErrorComponentProps> = ({
           {error.message}
         </h2>
         <Link
-          to="/"
+          to="/recipes"
           className="inline-block bg-[#daa520] hover:bg-[#c89418] text-white font-medium py-2 px-4 rounded transition-colors"
         >
           Tilbage til opskrifterne
