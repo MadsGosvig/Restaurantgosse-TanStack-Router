@@ -65,7 +65,7 @@ function RecipesLayoutComponent() {
             placeholder="Søg efter en opskrift..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[#daa520] focus:border-[#daa520]"
+            className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-hidden focus:ring-2 focus:ring-[#daa520] focus:border-[#daa520]"
           />
           {searchQuery && (
             <button

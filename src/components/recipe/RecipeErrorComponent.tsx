@@ -23,7 +23,7 @@ export const RecipeErrorComponent: React.FC<ErrorComponentProps> = ({
         </h2>
         <Link
           to="/recipes"
-          className="inline-block bg-[#daa520] hover:bg-[#c89418] text-white font-medium py-2 px-4 rounded transition-colors"
+          className="inline-block bg-[#daa520] hover:bg-[#c89418] text-white font-medium py-2 px-4 rounded-sm transition-colors"
         >
           Tilbage til opskrifterne
         </Link>
@@ -40,7 +40,7 @@ export const RecipeErrorComponent: React.FC<ErrorComponentProps> = ({
         onClick={() => {
           router.invalidate();
         }}
-        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition-colors"
+        className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-sm transition-colors"
       >
         Prøv igen!
       </button>

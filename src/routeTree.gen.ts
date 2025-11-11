@@ -8,82 +8,43 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as RecipesRouteImport } from './routes/recipes'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as RecipeRecipeIdRouteImport } from './routes/recipe.$recipeId'
 
-import { Route as rootRoute } from './routes/__root'
-import { Route as RecipesImport } from './routes/recipes'
-import { Route as IndexImport } from './routes/index'
-import { Route as RecipeRecipeIdImport } from './routes/recipe.$recipeId'
-
-// Create/Update Routes
-
-const RecipesRoute = RecipesImport.update({
+const RecipesRoute = RecipesRouteImport.update({
   id: '/recipes',
   path: '/recipes',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const IndexRoute = IndexImport.update({
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-const RecipeRecipeIdRoute = RecipeRecipeIdImport.update({
+const RecipeRecipeIdRoute = RecipeRecipeIdRouteImport.update({
   id: '/recipe/$recipeId',
   path: '/recipe/$recipeId',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-
-// Populate the FileRoutesByPath interface
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/recipes': {
-      id: '/recipes'
-      path: '/recipes'
-      fullPath: '/recipes'
-      preLoaderRoute: typeof RecipesImport
-      parentRoute: typeof rootRoute
-    }
-    '/recipe/$recipeId': {
-      id: '/recipe/$recipeId'
-      path: '/recipe/$recipeId'
-      fullPath: '/recipe/$recipeId'
-      preLoaderRoute: typeof RecipeRecipeIdImport
-      parentRoute: typeof rootRoute
-    }
-  }
-}
-
-// Create and export the route tree
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/recipes': typeof RecipesRoute
   '/recipe/$recipeId': typeof RecipeRecipeIdRoute
 }
-
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/recipes': typeof RecipesRoute
   '/recipe/$recipeId': typeof RecipeRecipeIdRoute
 }
-
 export interface FileRoutesById {
-  __root__: typeof rootRoute
+  __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/recipes': typeof RecipesRoute
   '/recipe/$recipeId': typeof RecipeRecipeIdRoute
 }
-
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths: '/' | '/recipes' | '/recipe/$recipeId'
@@ -92,11 +53,36 @@ export interface FileRouteTypes {
   id: '__root__' | '/' | '/recipes' | '/recipe/$recipeId'
   fileRoutesById: FileRoutesById
 }
-
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   RecipesRoute: typeof RecipesRoute
   RecipeRecipeIdRoute: typeof RecipeRecipeIdRoute
+}
+
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/recipes': {
+      id: '/recipes'
+      path: '/recipes'
+      fullPath: '/recipes'
+      preLoaderRoute: typeof RecipesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipe/$recipeId': {
+      id: '/recipe/$recipeId'
+      path: '/recipe/$recipeId'
+      fullPath: '/recipe/$recipeId'
+      preLoaderRoute: typeof RecipeRecipeIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -104,31 +90,6 @@ const rootRouteChildren: RootRouteChildren = {
   RecipesRoute: RecipesRoute,
   RecipeRecipeIdRoute: RecipeRecipeIdRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/recipes",
-        "/recipe/$recipeId"
-      ]
-    },
-    "/": {
-      "filePath": "index.tsx"
-    },
-    "/recipes": {
-      "filePath": "recipes.tsx"
-    },
-    "/recipe/$recipeId": {
-      "filePath": "recipe.$recipeId.tsx"
-    }
-  }
-}
-ROUTE_MANIFEST_END */

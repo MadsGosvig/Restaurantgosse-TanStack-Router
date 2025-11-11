@@ -22,7 +22,7 @@ export const RecipeInstructions: React.FC<RecipeInstructionsProps> = ({
           paragraphs.push(
             <div
               key={index}
-              className="bg-gray-50 rounded-lg p-4 mb-4 shadow-sm"
+              className="bg-gray-50 rounded-lg p-4 mb-4 shadow-xs"
             >
               <div className="flex items-center">
                 {/* Fixed width container with centered number */}
@@ -34,7 +34,7 @@ export const RecipeInstructions: React.FC<RecipeInstructionsProps> = ({
                 {/* Small gap */}
                 <div className="w-4"></div>
                 {/* Content area */}
-                <div className="flex-grow">{paragraphText}</div>
+                <div className="grow">{paragraphText}</div>
               </div>
             </div>
           );

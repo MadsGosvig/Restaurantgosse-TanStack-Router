@@ -37,7 +37,7 @@ const Header: React.FC = () => {
   };
 
   return (
-    <header className="bg-white shadow-sm">
+    <header className="bg-white shadow-xs">
       <div className="max-w-6xl mx-auto">
         <div className="flex justify-between items-center py-4 px-4">
           {/* Logo */}
@@ -51,7 +51,7 @@ const Header: React.FC = () => {
 
           {/* Mobile Burger Menu Button */}
           <button
-            className="md:hidden text-gray-700 focus:outline-none"
+            className="md:hidden text-gray-700 focus:outline-hidden"
             onClick={toggleMenu}
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           >

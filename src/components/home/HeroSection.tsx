@@ -15,7 +15,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   ctaLink,
 }) => {
   return (
-    <div className="bg-gradient-to-r from-amber-100 to-amber-50 rounded-xl shadow-lg p-8 mb-12">
+    <div className="bg-linear-to-r from-amber-100 to-amber-50 rounded-xl shadow-lg p-8 mb-12">
       <div className="flex flex-col md:flex-row items-center">
         <div className="md:w-1/2 mb-6 md:mb-0 md:pr-8">
           <h2 className="text-3xl font-semibold text-amber-800 mb-4">
